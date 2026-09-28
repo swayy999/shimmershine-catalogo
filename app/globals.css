@@ -480,6 +480,106 @@ body {
   margin-top: 16px;
 }
 
+/* ---------- Lotes ---------- */
+.lotes-section {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.lotes-heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 30px);
+  font-style: italic;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+.lotes-hint {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+.lotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+.lote-tile {
+  aspect-ratio: 3 / 4;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  cursor: zoom-in;
+  border-radius: 2px;
+  transition: border-color 0.15s ease;
+}
+.lote-tile:hover {
+  border-color: var(--brass);
+}
+.lote-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lote-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 17, 14, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 60;
+  cursor: zoom-out;
+}
+.lote-zoom-overlay.open {
+  display: flex;
+}
+.lote-zoom-overlay.open.zoomed-in {
+  display: block;
+  overflow: auto;
+  padding: 0;
+}
+.lote-zoom-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 2px;
+  cursor: zoom-in;
+}
+.lote-zoom-overlay.zoomed-in .lote-zoom-img {
+  display: block;
+  max-width: none;
+  max-height: none;
+  /* tope en ~resolución nativa de las fotos para que no se vea borroso al
+     ampliar en pantallas grandes */
+  width: min(170vw, 1650px);
+  height: auto;
+  margin: 0;
+  cursor: zoom-out;
+}
+.lote-zoom-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid rgba(246, 241, 231, 0.4);
+  color: #f6f1e7;
+  width: 38px;
+  height: 38px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lote-zoom-close svg {
+  width: 16px;
+  height: 16px;
+}
+
 footer {
   margin-top: 50px;
   padding-top: 24px;

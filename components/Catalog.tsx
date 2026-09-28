@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CategoryPage, Product } from "@/lib/products";
+import { getLotesForCategoria } from "@/lib/lotes";
 import CategoryTabs from "./CategoryTabs";
 import PageNav from "./PageNav";
 import ProductGrid from "./ProductGrid";
+import LotesSection from "./LotesSection";
 import DetailModal from "./DetailModal";
 
 export default function Catalog({ pages }: { pages: CategoryPage[] }) {
@@ -74,6 +76,7 @@ export default function Catalog({ pages }: { pages: CategoryPage[] }) {
         onTouchEnd={handleTouchEnd}
       >
         <ProductGrid productos={page ? page.productos : []} onOpen={setSelected} />
+        <LotesSection lotes={page ? getLotesForCategoria(page.categoria) : []} />
       </main>
       <p className="swipe-hint">Usa las flechas del teclado o desliza para pasar de categoría</p>
       <DetailModal product={selected} onClose={() => setSelected(null)} />

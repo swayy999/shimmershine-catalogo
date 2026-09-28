@@ -55,11 +55,19 @@ function findColumn(
 // Cloudinary asumiendo que la foto fue subida con ese mismo nombre (sin
 // extensión) como public_id dentro de la carpeta NEXT_PUBLIC_CLOUDINARY_FOLDER.
 // Eso es justo lo que hace scripts/subir-fotos-a-cloudinary.mjs.
+//
+// Mientras no haya cloud name configurado, se sirve directo desde
+// public/imagenes/ (mismo archivo que datos-fuente/imagenes/) para que el
+// catálogo muestre fotos sin depender de tener Cloudinary ya configurado.
 function cloudinaryFallbackUrl(filename: string): string | null {
+  const trimmed = filename.trim();
+  if (!trimmed) return null;
+
   const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  if (!cloud || !filename) return null;
+  if (!cloud) return `/imagenes/${trimmed}`;
+
   const folder = process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER || "shimmershine";
-  const base = filename.trim().replace(/\.[a-zA-Z0-9]+$/, "");
+  const base = trimmed.replace(/\.[a-zA-Z0-9]+$/, "");
   if (!base) return null;
   return `https://res.cloudinary.com/${cloud}/image/upload/f_auto,q_auto/${folder}/${base}`;
 }
