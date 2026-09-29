@@ -59,6 +59,7 @@ export default function Catalog({ pages }: { pages: CategoryPage[] }) {
   }
 
   const page = pages[currentPage];
+  const lotes = page ? getLotesForCategoria(page.categoria) : [];
 
   return (
     <>
@@ -75,8 +76,10 @@ export default function Catalog({ pages }: { pages: CategoryPage[] }) {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <ProductGrid productos={page ? page.productos : []} onOpen={setSelected} />
-        <LotesSection lotes={page ? getLotesForCategoria(page.categoria) : []} />
+        {(!lotes.length || (page && page.productos.length > 0)) && (
+          <ProductGrid productos={page ? page.productos : []} onOpen={setSelected} />
+        )}
+        <LotesSection lotes={lotes} />
       </main>
       <p className="swipe-hint">Usa las flechas del teclado o desliza para pasar de categoría</p>
       <DetailModal product={selected} onClose={() => setSelected(null)} />

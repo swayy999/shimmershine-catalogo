@@ -1,4 +1,5 @@
 import type { CategoryPage } from "@/lib/products";
+import { getLotesForCategoria } from "@/lib/lotes";
 import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
 
 export default function PageNav({
@@ -14,6 +15,14 @@ export default function PageNav({
   onPrev: () => void;
   onNext: () => void;
 }) {
+  const piezas = page ? page.productos.length : 0;
+  const lotes = page && !piezas ? getLotesForCategoria(page.categoria).length : 0;
+  const count = !page
+    ? ""
+    : lotes
+      ? `${lotes} lote${lotes === 1 ? "" : "s"}`
+      : `${piezas} pieza${piezas === 1 ? "" : "s"}`;
+
   return (
     <div className="page-nav">
       <button
@@ -28,9 +37,7 @@ export default function PageNav({
       </button>
       <div className="page-nav-center">
         <p className="page-nav-cat">{page ? page.categoria : "—"}</p>
-        <p className="page-nav-count">
-          {page ? `${page.productos.length} pieza${page.productos.length === 1 ? "" : "s"}` : ""}
-        </p>
+        <p className="page-nav-count">{count}</p>
       </div>
       <button
         type="button"

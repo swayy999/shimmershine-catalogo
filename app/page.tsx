@@ -1,5 +1,6 @@
 import { getCategoryPages, type CategoryPage } from "@/lib/products";
 import { formatWhatsappDisplay } from "@/lib/whatsapp";
+import { getCategoriasConLotes } from "@/lib/lotes";
 import Hero from "@/components/Hero";
 import Catalog from "@/components/Catalog";
 
@@ -9,6 +10,13 @@ export default async function Home() {
 
   try {
     pages = await getCategoryPages();
+    // Categorías que solo tienen fotos de lotes (sin filas en la planilla)
+    // se agregan al final como páginas propias.
+    for (const categoria of getCategoriasConLotes()) {
+      if (!pages.some((p) => p.categoria === categoria)) {
+        pages.push({ categoria, productos: [] });
+      }
+    }
   } catch (err) {
     errorMessage = err instanceof Error ? err.message : "Error desconocido al cargar el catálogo.";
   }
