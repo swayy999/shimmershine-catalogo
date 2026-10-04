@@ -9,6 +9,15 @@ export type Lote = {
 // Una categoría que no está en la planilla (p. ej. "Dijes") igual aparece
 // como página propia, mostrando solo sus lotes.
 const LOTES_POR_CATEGORIA: Record<string, Lote[]> = {
+  Anillos: [
+    { id: "anillos-1", imagen: "/lotes/anillos/anillos-1.jpg", titulo: "Bandeja de anillos 1" },
+    { id: "anillos-2", imagen: "/lotes/anillos/anillos-2.jpg", titulo: "Bandeja de anillos 2" },
+    { id: "anillos-3", imagen: "/lotes/anillos/anillos-3.jpg", titulo: "Bandeja de anillos 3" },
+    { id: "anillos-4", imagen: "/lotes/anillos/anillos-4.jpg", titulo: "Bandeja de anillos 4" },
+    { id: "anillos-5", imagen: "/lotes/anillos/anillos-5.jpg", titulo: "Bandeja de anillos 5" },
+    { id: "anillos-6", imagen: "/lotes/anillos/anillos-6.jpg", titulo: "Bandeja de anillos 6" },
+    { id: "anillos-7", imagen: "/lotes/anillos/anillos-7.jpg", titulo: "Bandeja de anillos 7" },
+  ],
   Aros: [
     { id: "coleccion-aros-1", imagen: "/lotes/aros/coleccion-aros-1.png", titulo: "Colección de aros 1" },
     { id: "coleccion-aros-2", imagen: "/lotes/aros/coleccion-aros-2.png", titulo: "Colección de aros 2" },
