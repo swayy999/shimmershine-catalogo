@@ -35,6 +35,32 @@ const LOTES_POR_CATEGORIA: Record<string, Lote[]> = {
     { id: "dijes-4", imagen: "/lotes/dijes/dijes-4.png", titulo: "Lote de dijes 4" },
     { id: "dijes-5", imagen: "/lotes/dijes/dijes-5.png", titulo: "Lote de dijes 5" },
   ],
+  Cadenas: [
+    { id: "cadenas-1", imagen: "/lotes/cadenas/cadenas-1.jpg", titulo: "Lote de cadenas 1" },
+    { id: "cadenas-2", imagen: "/lotes/cadenas/cadenas-2.jpg", titulo: "Lote de cadenas 2" },
+    { id: "cadenas-3", imagen: "/lotes/cadenas/cadenas-3.jpg", titulo: "Lote de cadenas 3" },
+    { id: "cadenas-4", imagen: "/lotes/cadenas/cadenas-4.jpg", titulo: "Lote de cadenas 4" },
+    { id: "cadenas-5", imagen: "/lotes/cadenas/cadenas-5.jpg", titulo: "Lote de cadenas 5" },
+  ],
+  Pulseras: [
+    { id: "pulseras-1", imagen: "/lotes/pulseras/pulseras-1.jpg", titulo: "Lote de pulseras 1" },
+    { id: "pulseras-2", imagen: "/lotes/pulseras/pulseras-2.jpg", titulo: "Lote de pulseras 2" },
+    { id: "pulseras-3", imagen: "/lotes/pulseras/pulseras-3.jpg", titulo: "Lote de pulseras 3" },
+    { id: "pulseras-4", imagen: "/lotes/pulseras/pulseras-4.jpg", titulo: "Lote de pulseras 4" },
+    { id: "pulseras-5", imagen: "/lotes/pulseras/pulseras-5.jpg", titulo: "Lote de pulseras 5" },
+    { id: "pulseras-6", imagen: "/lotes/pulseras/pulseras-6.jpg", titulo: "Lote de pulseras 6" },
+    { id: "pulseras-7", imagen: "/lotes/pulseras/pulseras-7.jpg", titulo: "Lote de pulseras 7" },
+    { id: "pulseras-8", imagen: "/lotes/pulseras/pulseras-8.jpg", titulo: "Lote de pulseras 8" },
+    { id: "pulseras-9", imagen: "/lotes/pulseras/pulseras-9.jpg", titulo: "Lote de pulseras 9" },
+    { id: "pulseras-10", imagen: "/lotes/pulseras/pulseras-10.jpg", titulo: "Lote de pulseras 10" },
+    { id: "pulseras-11", imagen: "/lotes/pulseras/pulseras-11.jpg", titulo: "Lote de pulseras 11" },
+    { id: "pulseras-12", imagen: "/lotes/pulseras/pulseras-12.jpg", titulo: "Lote de pulseras 12" },
+    { id: "pulseras-13", imagen: "/lotes/pulseras/pulseras-13.jpg", titulo: "Lote de pulseras 13" },
+    { id: "pulseras-14", imagen: "/lotes/pulseras/pulseras-14.jpg", titulo: "Lote de pulseras 14" },
+    { id: "pulseras-15", imagen: "/lotes/pulseras/pulseras-15.jpg", titulo: "Lote de pulseras 15" },
+    { id: "pulseras-16", imagen: "/lotes/pulseras/pulseras-16.jpg", titulo: "Lote de pulseras 16" },
+    { id: "pulseras-17", imagen: "/lotes/pulseras/pulseras-17.jpg", titulo: "Lote de pulseras 17" },
+  ],
 };
 
 export function getLotesForCategoria(categoria: string): Lote[] {
