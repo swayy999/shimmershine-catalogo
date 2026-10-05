@@ -1,4 +1,5 @@
-import { parseCsv } from "./csv";
+import { normalizeHeader, parseCsv } from "./csv";
+import type { Lote } from "./lotes";
 
 export type Product = {
   no: number;
@@ -15,6 +16,7 @@ export type Product = {
 export type CategoryPage = {
   categoria: string;
   productos: Product[];
+  lotes: Lote[];
 };
 
 // Alias aceptados por columna: la planilla puede usar cualquiera de estos
@@ -30,15 +32,6 @@ const COLUMN_ALIASES = {
   url_imagen: ["url_imagen", "url_imagen_cloudinary", "imagen_url", "imagen"],
   archivo_imagen: ["archivo_imagen", "archivo_imagen_local", "imagen_archivo"],
 } as const;
-
-function normalizeHeader(h: string): string {
-  return h
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "_");
-}
 
 function findColumn(
   headerIndex: Record<string, number>,
@@ -155,5 +148,5 @@ export async function getCategoryPages(): Promise<CategoryPage[]> {
     byCategory.get(categoria)!.push(product);
   }
 
-  return order.map((categoria) => ({ categoria, productos: byCategory.get(categoria)! }));
+  return order.map((categoria) => ({ categoria, productos: byCategory.get(categoria)!, lotes: [] }));
 }

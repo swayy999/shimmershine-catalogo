@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CategoryPage, Product } from "@/lib/products";
-import { getLotesForCategoria } from "@/lib/lotes";
 import CategoryTabs from "./CategoryTabs";
 import PageNav from "./PageNav";
 import ProductGrid from "./ProductGrid";
@@ -59,7 +58,7 @@ export default function Catalog({ pages }: { pages: CategoryPage[] }) {
   }
 
   const page = pages[currentPage];
-  const lotes = page ? getLotesForCategoria(page.categoria) : [];
+  const lotes = page ? page.lotes : [];
 
   return (
     <>

@@ -10,6 +10,11 @@
 // Uso:
 //   npm run subir-fotos
 //
+// Además sube las fotos de lotes (lib/lotes-locales.json → public/lotes/) a
+// <CLOUDINARY_FOLDER>/lotes/<categoria>/ y escribe datos-fuente/lotes.con-urls.csv
+// (categoria, titulo, url_imagen), listo para importar como pestaña "lotes" de
+// la planilla.
+//
 // Por defecto lee las fotos desde datos-fuente/imagenes/ y el CSV desde
 // datos-fuente/productos_shimmershine.csv, y escribe
 // datos-fuente/productos_shimmershine.con-urls.csv con la columna
@@ -38,6 +43,8 @@ const CSV_IN = process.env.CSV_ENTRADA || path.join(ROOT, "datos-fuente", "produ
 const CSV_OUT =
   process.env.CSV_SALIDA || path.join(ROOT, "datos-fuente", "productos_shimmershine.con-urls.csv");
 const CACHE_FILE = path.join(ROOT, "datos-fuente", ".cloudinary-cache.json");
+const LOTES_JSON = path.join(ROOT, "lib", "lotes-locales.json");
+const LOTES_CSV_OUT = path.join(ROOT, "datos-fuente", "lotes.con-urls.csv");
 
 const tieneCredenciales =
   process.env.CLOUDINARY_URL ||
@@ -137,6 +144,45 @@ async function main() {
   console.log(`Listo. Subidas: ${subidas} · Reutilizadas de caché: ${reutilizadas} · Filas sin imagen: ${sinImagen}`);
   console.log(`CSV generado: ${CSV_OUT}`);
   console.log("Copia esa columna (o todo el archivo) a tu Google Sheet publicado como CSV.");
+
+  await subirLotes(cache);
+}
+
+async function subirLotes(cache) {
+  const lotesPorCategoria = JSON.parse(fs.readFileSync(LOTES_JSON, "utf8"));
+  const filas = [];
+  let subidas = 0;
+
+  for (const [categoria, lotes] of Object.entries(lotesPorCategoria)) {
+    for (const lote of lotes) {
+      const key = lote.imagen.replace(/^\//, ""); // "lotes/aros/aros-4.png"
+      if (!cache[key]) {
+        const localPath = path.join(ROOT, "public", key);
+        if (!fs.existsSync(localPath)) {
+          console.warn(`  ! No encontré la foto de lote: ${localPath}`);
+          continue;
+        }
+        process.stdout.write(`Subiendo ${key}... `);
+        const result = await cloudinary.uploader.upload(localPath, {
+          folder: `${CLOUD_FOLDER}/${path.dirname(key)}`,
+          public_id: path.basename(key).replace(/\.[a-zA-Z0-9]+$/, ""),
+          overwrite: true,
+          resource_type: "image",
+        });
+        console.log("OK");
+        cache[key] = result.secure_url;
+        subidas++;
+        saveCache(cache);
+      }
+      filas.push([categoria, lote.titulo, cache[key]]);
+    }
+  }
+
+  fs.writeFileSync(LOTES_CSV_OUT, stringifyCsv(["categoria", "titulo", "url_imagen"], filas, ","), "utf8");
+  console.log("");
+  console.log(`Lotes: ${filas.length} filas (${subidas} fotos subidas ahora).`);
+  console.log(`CSV generado: ${LOTES_CSV_OUT}`);
+  console.log('Impórtalo como una pestaña nueva "lotes" en la misma planilla.');
 }
 
 function loadCache() {

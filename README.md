@@ -90,6 +90,36 @@ funciona: solo asegúrate de que el `public_id` de cada foto sea el nombre de
 archivo sin extensión (opción B) o pega la URL completa que te da Cloudinary
 en la columna `url_imagen` (opción A).
 
+### Pestaña "lotes" (fotos de lotes completos)
+
+Las fotos de lotes también salen de la planilla, en una pestaña aparte
+llamada `lotes`:
+
+| Columna      | Notas                                                         |
+| ------------ | ------------------------------------------------------------- |
+| `categoria`  | Misma categoría que en la hoja de productos (p. ej. `Aros`).  |
+| `titulo`     | Opcional. Texto alternativo de la foto.                       |
+| `url_imagen` | URL completa de Cloudinary.                                    |
+
+`npm run subir-fotos` genera `datos-fuente/lotes.con-urls.csv` con todas las
+fotos de lotes actuales ya subidas: impórtalo en la planilla con **Archivo →
+Importar → Insertar hoja(s) nueva(s)** y renombra la pestaña a `lotes`.
+Después publícala como CSV (igual que la de productos, eligiendo la pestaña
+`lotes`) y pega ese link como `GOOGLE_SHEET_LOTES_CSV_URL` en `.env.local` y
+en Vercel. Sin esa variable, el sitio sigue usando `lib/lotes-locales.json`.
+
+### Cómo agrega fotos otra persona (sin tocar código)
+
+1. Invítala a Cloudinary (**Settings → Users → Invite user**, rol *Media
+   Library user* o similar) y compártele la planilla con permiso de edición.
+2. Ella sube la foto en Cloudinary → **Media Library**, dentro de la carpeta
+   `shimmershine` (o `shimmershine/lotes/<categoria>` para lotes).
+3. En la foto subida usa **Copy URL** y pega ese link en la planilla:
+   - Producto nuevo: fila nueva en la hoja de productos, link en
+     `url_imagen_cloudinary` (varias fotos separadas por `|`).
+   - Lote nuevo: fila nueva en la pestaña `lotes`, link en `url_imagen`.
+4. El sitio se actualiza solo en un máximo de 5 minutos.
+
 ## 3. Desarrollo local
 
 Requiere Node.js 18 o superior.
@@ -120,6 +150,7 @@ Abre [http://localhost:3000](http://localhost:3000).
 3. En **Environment Variables** agrega, para el entorno de Production (y
    Preview si quieres):
    - `GOOGLE_SHEET_CSV_URL`
+   - `GOOGLE_SHEET_LOTES_CSV_URL` (cuando exista la pestaña `lotes`)
    - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
    - `NEXT_PUBLIC_CLOUDINARY_FOLDER` (opcional, por defecto `shimmershine`)
    - `NEXT_PUBLIC_WHATSAPP_PHONE` (opcional, por defecto `+56966129549`)
@@ -141,6 +172,7 @@ components/            Componentes de UI (tabs, paginación, tarjetas, modal)
 lib/
   csv.ts                Parser de CSV (detecta , o ;)
   products.ts            Lee el CSV y arma las páginas por categoría
+  lotes.ts               Lee la pestaña "lotes" (o lotes-locales.json)
   format.ts              Formato de precio en CLP
   whatsapp.ts             Link y número de WhatsApp
 scripts/

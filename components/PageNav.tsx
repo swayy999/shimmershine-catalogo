@@ -1,5 +1,4 @@
 import type { CategoryPage } from "@/lib/products";
-import { getLotesForCategoria } from "@/lib/lotes";
 import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
 
 export default function PageNav({
@@ -16,7 +15,7 @@ export default function PageNav({
   onNext: () => void;
 }) {
   const piezas = page ? page.productos.length : 0;
-  const lotes = page && !piezas ? getLotesForCategoria(page.categoria).length : 0;
+  const lotes = page && !piezas ? page.lotes.length : 0;
   const count = !page
     ? ""
     : lotes

@@ -74,3 +74,14 @@ function detectDelimiter(text: string): string {
   const semicolons = (firstLine.match(/;/g) || []).length;
   return semicolons > commas ? ";" : ",";
 }
+
+// Encabezados sin tildes, en minúsculas y con "_" en vez de espacios, para que
+// la planilla pueda escribir "Categoría", "url imagen", etc.
+export function normalizeHeader(h: string): string {
+  return h
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_");
+}
